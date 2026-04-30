@@ -1,0 +1,28 @@
+{
+  "name": "ai-test-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node create-cases-and-automate.js",
+    "test:pw": "npx playwright test --config playwright.config.js",
+    "analyze:failures": "node analyze-failures.js",
+    "test:analyze": "node run-test-and-analyze.js",
+    "run:and:analyze": "node run-test-and-analyze.js",
+    "full:e2e": "node create-cases-and-automate.js && node run-test-and-analyze.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "openai": "^6.34.0",
+    "readline-sync": "^1.4.10",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "npm-run-all": "^4.1.5"
+  }
+}
