@@ -1,0 +1,17 @@
+[
+  {
+    "id": "REQ-001",
+    "module": "visit stage wired page",
+    "url": "https://stag2.wired.com/v2/offers/mot-v2-wired2",
+    "frameworks": [
+      "playwright"
+    ],
+    "selectors": {
+      "subscribe": "[class *='NavCTALink'], navigation__list",
+      "toggle": "data-cy='toggle_2'",
+      "offer": "[role='radio']",
+      "offerButton": "[class *='offer-layout_button-container'] [data-cy='btn_offer']"
+    },
+    "requirement": "visit page https://stag2.wired.com/v2/offers/mot-v2-wired2\n make sure the page loads propery by checking response < 400 and the page should have heading as Wired\nthe page should have clickable link with selector subscribe \"subsscribe\"\nselet offer 2 and click offerButton\nverify that the page is having email feild\nenter test123@yopmail.com and click continue button"
+   }
+]

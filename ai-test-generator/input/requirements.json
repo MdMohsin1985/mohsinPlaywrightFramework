@@ -1,17 +1,28 @@
 [
   {
     "id": "REQ-001",
-    "module": "visit page and verify details",
-    "url": "https://stag2.wired.com/v2/offers/mot-v2-wired2",
+    "module": "visit test page",
+    "url": "https://playwright.dev",
     "frameworks": [
       "playwright"
     ],
     "selectors": {
-      "subscribe": "[class *='NavCTALink'], navigation__list",
-      "toggle": "data-cy='toggle_2'",
-      "offer": "[role='radio']",
-      "offerButton": "[class *='offer-layout_button-container'] [data-cy='btn_offer']"
+      "logo": "a[href='/'] img[alt='Playwright logo']",
+      "getStarted": "text='Get started'",
+      "docsLink": "a[href='/docs/api/class-playwright']",
+      "footer": "footer",
+      "searchButton": "button[aria-label*='Search']"
     },
-    "requirement": "visit page https://stag2.wired.com/v2/offers/mot-v2-wired2\n make sure the page loads propery by checking response < 400 and the page should have heading as Wired\nthe page should have clickable link with selector subscribe \"subsscribe\"\nselet offer 2 and click offerButton\nverify that the page is having email feild\nenter test123@yopmail.com and click continue button"
+    "expectedNavigation": {
+      "getStarted": "/docs/"
+    },
+    "requirement": [
+      "Visit page using Url https://playwright.dev",
+      "Make sure the page loads properly by checking response < 400 and the page should have logo visible",
+      "The page should have clickable getStarted link and click it",
+      "Make sure the page loads properly by checking response < 400 and the page should have docsLink visible",
+      "Verify footer selector is present",
+      "Verify searchButton selector is clickable"
+    ]
    }
 ]
