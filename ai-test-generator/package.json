@@ -9,7 +9,8 @@
     "analyze:failures": "node analyze-failures.js",
     "test:analyze": "node run-test-and-analyze.js",
     "run:and:analyze": "node run-test-and-analyze.js",
-    "full:e2e": "node create-cases-and-automate.js && node run-test-and-analyze.js"
+    "full:e2e": "node create-cases-and-automate.js && node run-test-and-analyze.js",
+    "dev": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -17,7 +18,9 @@
   "type": "module",
   "dependencies": {
     "dotenv": "^17.4.2",
-    "openai": "^6.34.0",
+    "express": "^5.2.1",
+    "multer": "^2.1.1",
+    "openai": "^6.38.0",
     "readline-sync": "^1.4.10",
     "xlsx": "^0.18.5"
   },

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Test Generator</title>
+</head>
+<body>
+  <h2>AI Test Case Generator</h2>
+
+  <form id="uploadForm">
+    <label>Upload Requirements File***:</label><br><br>
+    <input type="file" name="requirementFile" accept=".txt,.xlsx,.xls" required />
+    <br><br>
+
+    <button type="submit">Generate Test Cases</button>
+  </form>
+
+  <br>
+
+  <div id="status"></div>
+  <div id="downloads"></div>
+
+  <script>
+    const form = document.getElementById("uploadForm");
+    const statusDiv = document.getElementById("status");
+    const downloadsDiv = document.getElementById("downloads");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      statusDiv.innerText = "Generating test cases...";
+      downloadsDiv.innerHTML = "";
+
+      const formData = new FormData(form);
+
+      const response = await fetch("/generate", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        statusDiv.innerText = "Generated successfully.";
+
+        downloadsDiv.innerHTML = `
+          <p><a href="${data.txtFile}" download>Download TXT</a></p>
+          <p><a href="${data.xlsxFile}" download>Download XLSX</a></p>
+        `;
+      } else {
+        statusDiv.innerText = "Error: " + data.message;
+      }
+    });
+  </script>
+</body>
+</html>
