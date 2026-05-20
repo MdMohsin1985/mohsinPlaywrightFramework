@@ -68,18 +68,20 @@ if (!requirementText || requirementText.trim().length < 50) {
   });
 }
 
-    const prompt = `
-You are a Senior QA Test Manager and Automation Lead.
+const prompt = `
+You are a Senior QA Test Manager.
 
-Generate detailed test cases from the below requirement.
+Generate manual test cases ONLY from the requirement provided below.
 
-IMPORTANT RULES:
-- Do not assume missing details.
-- Do not create test cases if requirement is unclear.
-- If the requirement does not contain enough information, return this exact JSON:
+Rules:
+- Do not require selectors for manual test case generation.
+- Do not generate Playwright code.
+- Do not assume missing business flows.
+- Use only the provided id, module, url, and requirement.
+- If id, module, or requirement is missing, return:
 [
   {
-    "error": "Invalid or insufficient requirement. Please provide id, module, url, requirement, and selectors."
+    "error": "Invalid or insufficient requirement. Please provide id, module, and requirement."
   }
 ]
 
@@ -101,7 +103,6 @@ Each object should have:
 - expectedResult
 - automationCandidate
 `;
-
     const aiResponse = await openai.responses.create({
       model: "gpt-5.4-mini",
       input: prompt,
