@@ -4,7 +4,7 @@ test('GET posts', async ({ request }) => {
   const response = await request.get('https://jsonplaceholder.typicode.com/posts/1');
   const body = await response.json();
   console.log(body.body);
-  expect(response.status()).toBe(400);
+  expect(response.status()).toBe(200);
   
   expect(body.id).toBe(1);
   expect(body.userId).toBe(1);

@@ -14,7 +14,7 @@ test('POST create new post', async ({ request }) => {
   );
 
   // Verify status code
-  expect(response.status()).toBe(400);
+  expect(response.status()).toBe(201);
 
   // Convert response to JSON
   const body = await response.json();

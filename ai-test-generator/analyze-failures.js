@@ -23,6 +23,51 @@ function readFileIfExists(filePath) {
   return fs.existsSync(filePath) ? fs.readFileSync(filePath, "utf-8") : "";
 }
 
+function hasTestFailures(suite) {
+  if (!suite || typeof suite !== "object") return false;
+
+  if (Array.isArray(suite.tests)) {
+    for (const test of suite.tests) {
+      if (Array.isArray(test.results) && test.results.some(result =>
+        ["failed", "timedOut", "interrupted"].includes(result.status)
+      )) {
+        return true;
+      }
+    }
+  }
+
+  return Array.isArray(suite.suites) && suite.suites.some(hasTestFailures);
+}
+
+function createNoIssuesReport() {
+  return `# AI Failure Analysis
+
+## 1. Final Classification
+No issues — all tests passed.
+
+## 2. Symptom
+No test failures were reported by Playwright.
+
+## 3. Actual Root Cause
+Not applicable. The test run completed without failures.
+
+## 4. Evidence
+Playwright reported no failed, timed-out, or interrupted test results.
+
+## 5. Why It Is Not Just a Selector Issue
+No selector or other test failure occurred in this run.
+
+## 6. Recommended Fix
+No fix is needed for this run.
+
+## 7. Suggested Code Improvement
+No code change is suggested because the tests passed.
+
+## 8. Prevention
+No issue was identified to prevent. Keep running the suite and review this report when a test fails.
+`;
+}
+
 function walkDir(dir, fileList = []) {
   if (!fs.existsSync(dir)) return fileList;
 
@@ -97,6 +142,26 @@ if (!fs.existsSync(outputDir)) {
 }
 
 const playwrightResults = readFileIfExists(resultsPath);
+let parsedResults;
+try {
+  parsedResults = JSON.parse(playwrightResults);
+} catch (error) {
+  console.error(`Could not parse Playwright results at ${resultsPath}: ${error.message}`);
+  process.exit(1);
+}
+
+const stats = parsedResults.stats || {};
+const hasFailures = Number(stats.unexpected || 0) > 0 ||
+  Number(stats.flaky || 0) > 0 ||
+  hasTestFailures(parsedResults);
+
+if (!hasFailures) {
+  fs.writeFileSync(reportPath, createNoIssuesReport());
+  console.log("No Playwright failures found. No-issues analysis created:");
+  console.log(reportPath);
+  process.exit(0);
+}
+
 const generatedTests = getGeneratedTests();
 const errorContexts = getErrorContextFiles();
 const artifactSummary = getArtifactSummary();

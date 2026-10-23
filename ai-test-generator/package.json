@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node create-cases-and-automate.js",
-    "test:pw": "npx playwright test --config playwright.config.js",
+    "test:pw": "npx playwright test output/playwright --config playwright.config.js",
     "test:api": "npx playwright test api --config playwright.config.js",
     "analyze:failures": "node analyze-failures.js",
     "test:analyze": "node run-test-and-analyze.js",
